@@ -46,6 +46,7 @@ class BucketActivity : Activity() {
             UtilsHelper.showMessage("Bucket is empty.", this)
             return
         }
+        HashHelper.bucket = bucket?.get()
         var bucketProducts = bucket?.get()?.id?.
         let { bucketProductRepository.findByBucketId(it) }?.
         stream()?.map { it.productId?.let { it1 ->
