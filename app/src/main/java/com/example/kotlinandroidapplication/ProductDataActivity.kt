@@ -78,6 +78,16 @@ class ProductDataActivity : Activity() {
         }
 
         val bucketProduct = BucketProduct(null, bucket.id, product?.id)
+        val productList = bucket.id?.let { bucketProductRepository.findByBucketId(it) }
+        if (productList != null) {
+            for (productBucket in productList) {
+                if (productBucket.productId == product?.id) {
+                    UtilsHelper.showMessage("Product ${product?.name} is already in the bucket.", this)
+                    return
+                }
+            }
+        }
+
         bucketProductRepository.save(bucketProduct)
 
         val intent = Intent(this, ProductsActivity::class.java)

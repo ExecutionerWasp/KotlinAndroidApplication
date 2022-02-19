@@ -71,4 +71,8 @@ class CommentRepository(context: Context): Repository {
     fun removeById(commentId: Long) {
         db?.execSQL("DELETE FROM ${CommentColumns.TABLE_NAME} WHERE _id=$commentId")
     }
+
+    fun removeByProductId(productId: Long) {
+        db?.execSQL("DELETE FROM ${CommentColumns.TABLE_NAME} WHERE ${CommentColumns.COLUMN_NAME_PRODUCT_ID}=$productId")
+    }
 }

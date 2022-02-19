@@ -12,6 +12,7 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".AdministrationActivity" />
         <activity android:name=".ProductCommentAddActivity" />
+        <activity android:name=".ProductRemoveActivity" />
 
         <activity android:name=".ProductCommentListActivity" />
         <activity android:name=".BucketActivity" />

@@ -75,7 +75,7 @@ class BucketActivity : Activity() {
             OnItemClickListener { adapterView, view, position, l ->
                 val product = bucketProducts[position]
                 HashHelper.product = product
-                val intent = Intent(this, ProductDataActivity::class.java)
+                val intent = Intent(this, ProductRemoveActivity::class.java)
                 startActivity(intent)
             }
 

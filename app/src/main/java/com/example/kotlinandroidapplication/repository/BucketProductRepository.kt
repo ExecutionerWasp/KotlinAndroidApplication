@@ -6,12 +6,11 @@ import android.os.Build
 import android.provider.BaseColumns
 import android.support.annotation.RequiresApi
 import com.example.kotlinandroidapplication.domain.BucketProduct
-import com.example.kotlinandroidapplication.domain.tables.BucketColumns
 import com.example.kotlinandroidapplication.domain.tables.BucketProductColumns
-import com.example.kotlinandroidapplication.domain.tables.CommentColumns
 
 class BucketProductRepository(context: Context): Repository {
 
+    private val bucketRepository = BucketRepository(context)
     private val dbHelper = DbHelper(context)
     private var db: SQLiteDatabase? = null
 
@@ -53,5 +52,13 @@ class BucketProductRepository(context: Context): Repository {
 
     fun removeById(bucketId: Long) {
         db?.execSQL("DELETE FROM ${BucketProductColumns.TABLE_NAME} WHERE ${BucketProductColumns.COLUMN_NAME_BUCKET_ID}=$bucketId")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun removeByProductIdAdnUserId(productId: Long, userId: Long) {
+        bucketRepository.openDb()
+        val bucket = bucketRepository.findByUserId(userId)
+        db?.execSQL("DELETE FROM ${BucketProductColumns.TABLE_NAME} WHERE ${BucketProductColumns.COLUMN_NAME_PRODUCT_ID} = $productId AND ${BucketProductColumns.COLUMN_NAME_BUCKET_ID} = ${bucket.get().id}")
+        bucketRepository.closeDb()
     }
 }

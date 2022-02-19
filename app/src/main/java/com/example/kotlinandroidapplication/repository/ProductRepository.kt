@@ -7,10 +7,13 @@ import android.provider.BaseColumns
 import android.support.annotation.RequiresApi
 import com.example.kotlinandroidapplication.domain.Product
 import com.example.kotlinandroidapplication.domain.tables.ProductColumns
+import com.example.kotlinandroidapplication.util.HashHelper
 import java.util.*
 
-class ProductRepository(context: Context) : Repository{
+class ProductRepository(context: Context) : Repository {
 
+    private val commentRepository = CommentRepository(context)
+    private val bucketProductRepository = BucketProductRepository(context)
     private val dbHelper = DbHelper(context)
     private var db: SQLiteDatabase? = null
 
@@ -26,7 +29,7 @@ class ProductRepository(context: Context) : Repository{
         if (product.id == null) {
             db?.insert(ProductColumns.TABLE_NAME, null, product.asValues())
         } else {
-            db?.update(ProductColumns.TABLE_NAME, product.asValues(),null, null)
+            db?.update(ProductColumns.TABLE_NAME, product.asValues(), null, null)
         }
     }
 
@@ -42,7 +45,8 @@ class ProductRepository(context: Context) : Repository{
                 product.id = getLong(getColumnIndex(BaseColumns._ID))
                 product.name = getString(getColumnIndex(ProductColumns.COLUMN_NAME_NAME))
                 product.price = getDouble(getColumnIndex(ProductColumns.COLUMN_NAME_PRICE))
-                product.description = getString(getColumnIndex(ProductColumns.COLUMN_NAME_DESCRIPTION))
+                product.description =
+                    getString(getColumnIndex(ProductColumns.COLUMN_NAME_DESCRIPTION))
                 product.imgUrl = getString(getColumnIndex(ProductColumns.COLUMN_NAME_IMG_URL))
                 product.authorId = getLong(getColumnIndex(ProductColumns.COLUMN_NAME_AUTHOR_ID))
                 products.add(product)
@@ -54,7 +58,7 @@ class ProductRepository(context: Context) : Repository{
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun findById(id:Long):Optional<Product> {
+    fun findById(id: Long): Optional<Product> {
         val findAll = findAll()
         for (local in findAll) {
             if (local.id == id) {
@@ -62,5 +66,23 @@ class ProductRepository(context: Context) : Repository{
             }
         }
         return Optional.empty()
+    }
+
+    fun removeById(productId: Long) {
+        if (HashHelper.administrator != null) {
+            db?.execSQL("DELETE FROM ${ProductColumns.TABLE_NAME} WHERE _id=$productId")
+            commentRepository.openDb()
+            commentRepository.findByProductId(productId)
+            commentRepository.closeDb()
+        } else {
+            bucketProductRepository.openDb()
+            HashHelper.user?.id?.let {
+                bucketProductRepository.removeByProductIdAdnUserId(productId,
+                    it
+                )
+            }
+            bucketProductRepository.closeDb()
+        }
+
     }
 }
