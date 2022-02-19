@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import com.example.kotlinandroidapplication.repository.AdministratorRepository
+import com.example.kotlinandroidapplication.repository.BucketProductRepository
 import com.example.kotlinandroidapplication.repository.ProductRepository
 import com.example.kotlinandroidapplication.util.HashHelper
 import com.example.kotlinandroidapplication.util.CustomThread
@@ -23,6 +24,7 @@ import java.util.stream.Collectors
 class ProductsActivity : Activity() {
 
     private val productRepository = ProductRepository(this)
+    private val bucketProductRepository = BucketProductRepository(this)
     private val administratorRepository = AdministratorRepository(this)
     private val logger: Logger = Logger.getLogger(ProductsActivity::javaClass.name)
 
@@ -33,6 +35,7 @@ class ProductsActivity : Activity() {
         super.onCreate(savedInstanceState)
         productRepository.openDb()
         administratorRepository.openDb()
+        bucketProductRepository.openDb()
         setContentView(R.layout.activity_products)
         val user = HashHelper.user
         val productsUserEmail = findViewById<TextView>(R.id.productsUserEmail)
@@ -84,12 +87,15 @@ class ProductsActivity : Activity() {
     }
 
     fun onBack(v: View) {
+        if (HashHelper.bucket != null) {
+            HashHelper.bucket?.id?.let { bucketProductRepository.removeById(it) }
+        }
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
     //Thread
     override fun onDestroy() {
-        CustomThread().repo(productRepository).repo(administratorRepository).start()
+        CustomThread().repo(productRepository).repo(administratorRepository).repo(bucketProductRepository).start()
         super.onDestroy()
     }
 }

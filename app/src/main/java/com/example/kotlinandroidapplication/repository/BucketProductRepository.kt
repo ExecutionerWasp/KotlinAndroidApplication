@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi
 import com.example.kotlinandroidapplication.domain.BucketProduct
 import com.example.kotlinandroidapplication.domain.tables.BucketColumns
 import com.example.kotlinandroidapplication.domain.tables.BucketProductColumns
+import com.example.kotlinandroidapplication.domain.tables.CommentColumns
 
 class BucketProductRepository(context: Context): Repository {
 
@@ -50,4 +51,7 @@ class BucketProductRepository(context: Context): Repository {
         return list
     }
 
+    fun removeById(bucketId: Long) {
+        db?.execSQL("DELETE FROM ${BucketProductColumns.TABLE_NAME} WHERE ${BucketProductColumns.COLUMN_NAME_BUCKET_ID}=$bucketId")
+    }
 }
