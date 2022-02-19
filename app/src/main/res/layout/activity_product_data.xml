@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:id="@+id/clMain"
+        android:background="#5A5A5A">
+
+    <Button
+            android:text="BACK"
+            android:layout_width="414dp"
+            android:layout_height="58dp"
+            android:id="@+id/start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
+            android:onClick="onBack"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="744dp" />
+
+    <Button
+            android:text="ADD PRODUCT TO BACKET"
+            android:layout_width="414dp"
+            android:layout_height="58dp"
+            android:id="@+id/start3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
+            android:onClick="onAddProductToBucket"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="688dp" />
+
+    <Button
+            android:text="ADD COMMENT"
+            android:layout_width="414dp"
+            android:layout_height="58dp"
+            android:id="@+id/start4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
+            android:onClick="onAddComment"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="640dp" />
+
+    <Button
+            android:text="COMMENTS"
+            android:layout_width="414dp"
+            android:layout_height="58dp"
+            android:id="@+id/start5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
+            android:onClick="onComments"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="592dp" />
+
+    <TextView
+            android:text="id"
+            android:layout_width="320dp"
+            android:layout_height="71dp"
+            android:id="@+id/productId"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.352"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="40dp" />
+
+    <TextView
+            android:text="Name"
+            android:layout_width="320dp"
+            android:layout_height="103dp"
+            android:id="@+id/productName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.351"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@+id/productId"
+            android:layout_marginTop="8dp" />
+
+    <TextView
+            android:text="Price"
+            android:layout_width="320dp"
+            android:layout_height="85dp"
+            android:id="@+id/productPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.351"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@+id/productName"
+            android:layout_marginTop="4dp" />
+
+    <ScrollView
+            android:layout_width="320dp"
+            android:layout_height="169dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/start3"
+            app:layout_constraintHorizontal_bias="0.351"
+            android:id="@+id/scrollView2"
+            app:layout_constraintTop_toBottomOf="@+id/productPrice"
+            app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+                android:text="Description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/productDescription"
+                android:rotationX="0"
+                android:textSize="20sp" />
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
